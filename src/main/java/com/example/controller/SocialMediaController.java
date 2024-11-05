@@ -14,9 +14,14 @@ import java.util.List;
  @RestController
 public class SocialMediaController {
     
-    MessageRepository messageRepository;
 
-    MessageService messageService = new MessageService(messageRepository);
+    public SocialMediaController(MessageService messageService){
+        this.messageService = messageService;
+    }
+
+    
+
+   MessageService messageService;
 
     //get all messages
     @GetMapping("messages")
