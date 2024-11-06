@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,16 @@ public class SocialMediaController {
             return ResponseEntity.status(200).body(null);
         }
         return ResponseEntity.status(200).body(m);
+    }
+
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<Integer> deleteMessageById(@PathVariable int messageId){
+        Message m = messageService.findById(messageId);
+        if(m == null){
+            return ResponseEntity.status(200).body(null);
+        }
+        messageService.deleteMessage(messageId);
+        return ResponseEntity.status(200).body(1);
     }
 
 }
