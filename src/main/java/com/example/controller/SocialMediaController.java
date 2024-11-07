@@ -12,6 +12,7 @@ import com.example.entity.Message;
 import com.example.service.MessageService;
 import com.example.repository.MessageRepository;
 import java.util.List;
+import java.util.ArrayList;
 
 
  @RestController
@@ -53,6 +54,7 @@ public class SocialMediaController {
 
     @DeleteMapping("/messages/{messageId}")
     public ResponseEntity<Integer> deleteMessageById(@PathVariable int messageId){
+        System.out.println("peanut");
         Message m = messageService.findById(messageId);
         if(m == null){
             return ResponseEntity.status(200).body(null);
@@ -61,4 +63,16 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(1);
     }
 
+    @GetMapping("/accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getMessagesbyUser(@PathVariable int accountId){
+        System.out.println("peanut");
+        System.out.println("accountid is " + accountId);
+        ArrayList<Message> m = (ArrayList<Message>)messageService.getAllMessagesByUser(accountId);
+        if(m == null || m.isEmpty() || m.size() == 0){
+            //return ResponseEntity.status(200).body(null);
+            return ResponseEntity.status(200).body(m);
+        }
+        
+        return ResponseEntity.status(200).body(m);
+    }
 }

@@ -62,4 +62,13 @@ public class MessageService {
 
     }
 
+    public List<Message> getAllMessagesByUser(int accountId){
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        if(!optionalAccount.isPresent()){
+            return null;
+        }
+        return messageRepository.findMessageByPostedBy(accountId);
+
+    }
+
 }
