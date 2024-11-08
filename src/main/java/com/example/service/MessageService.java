@@ -71,4 +71,16 @@ public class MessageService {
 
     }
 
+    public Message updateMessage(String text, int messageId){
+        System.out.println("service text is " + text);
+        Message m = this.findById(messageId);
+        if(m == null || text.isBlank() || text.length() == 0 || text.length() > 255){
+            return null;
+        }
+        m.setMessageText(text);
+        messageRepository.save(m);
+        return m;
+
+    } 
+
 }

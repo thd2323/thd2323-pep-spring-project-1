@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +66,7 @@ public class SocialMediaController {
 
     @GetMapping("/accounts/{accountId}/messages")
     public ResponseEntity<List<Message>> getMessagesbyUser(@PathVariable int accountId){
+        
         System.out.println("peanut");
         System.out.println("accountid is " + accountId);
         ArrayList<Message> m = (ArrayList<Message>)messageService.getAllMessagesByUser(accountId);
@@ -75,4 +77,19 @@ public class SocialMediaController {
         
         return ResponseEntity.status(200).body(m);
     }
+
+    @PatchMapping("/messages/{messageId}")
+    public ResponseEntity<Integer> updateMessage(@RequestBody Message message, @PathVariable int messageId){
+        String messageText = message.getMessageText();
+        System.out.println("messageText is " + messageText);
+        System.out.println("messageText length is " + messageText.length());
+        
+        Message m = messageService.updateMessage(messageText, messageId);
+        if(m == null || messageText.isBlank() || messageText.length() == 0){
+            
+            return ResponseEntity.status(400).body(0);
+        }
+        return ResponseEntity.status(200).body(1);
+    }
+
 }
