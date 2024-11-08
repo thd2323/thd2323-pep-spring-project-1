@@ -92,4 +92,9 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(1);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Account> userLogin(){
+        return null;
+    }
+
 }
