@@ -12,6 +12,8 @@ import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.service.MessageService;
 import com.example.repository.MessageRepository;
+import com.example.service.AccountService;
+import com.example.repository.AccountRepository;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,13 +22,15 @@ import java.util.ArrayList;
 public class SocialMediaController {
     
 
-    public SocialMediaController(MessageService messageService){
+    public SocialMediaController(MessageService messageService, AccountService accountService){
         this.messageService = messageService;
+        this.accountService = accountService;
     }
 
     
 
    MessageService messageService;
+    AccountService accountService;
 
     //get all messages
     @GetMapping("messages")
@@ -93,8 +97,12 @@ public class SocialMediaController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Account> userLogin(){
-        return null;
+    public ResponseEntity<Account> userLogin(@RequestBody Account account){
+        account = accountService.userLogin(account);
+        if(account == null){
+            return ResponseEntity.status(401).body(null);
+        }
+        return ResponseEntity.status(200).body(account);
     }
 
 }

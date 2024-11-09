@@ -13,7 +13,20 @@ import java.util.List;
 @Service
 @Transactional
 public class AccountService {
-    
+
+    //MessageRepository messageRepository;
+    AccountRepository accountRepository;
+
+    @Autowired
+    public AccountService(AccountRepository accountRepository){
+        //this.messageRepository = messageRepository;
+        this.accountRepository = accountRepository;
+    }
+
+
+    public Account userLogin(Account account){
+        return accountRepository.findAccountByUsernameAndPassword(account.getUsername(), account.getPassword());
+    }
 
     
     
