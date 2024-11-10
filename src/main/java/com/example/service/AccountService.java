@@ -28,6 +28,28 @@ public class AccountService {
         return accountRepository.findAccountByUsernameAndPassword(account.getUsername(), account.getPassword());
     }
 
+    //returns true if an account with this username exists.
+    //returns false otherwise
+    public boolean findByUsername(String username){
+        
+        Account test = accountRepository.findAccountByUsername(username);
+        //System.out.println("username of test is " + test.getUsername());
+        if(test == null){
+            return false;
+        }
+        return true;
+    }
+
+    public Account userRegistration(Account account){
+        String username = account.getUsername();
+        String password = account.getPassword();
+        
+        if(username.isBlank() || password.length() < 4){
+            return null;
+        }
+
+        return accountRepository.save(account);
+    }
     
     
 

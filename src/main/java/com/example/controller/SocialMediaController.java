@@ -105,4 +105,20 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(account);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<Account> userRegistration(@RequestBody Account account){
+        System.out.println("username of trying to register is " + account.getUsername());
+        
+        
+        if(accountService.findByUsername(account.getUsername())){
+            System.out.println("username already exists");
+            return ResponseEntity.status(409).body(null);
+        }
+        account = accountService.userRegistration(account);
+        if(account == null){
+            return ResponseEntity.status(400).body(null);
+        }
+        return ResponseEntity.status(200).body(account);
+    }
+
 }
